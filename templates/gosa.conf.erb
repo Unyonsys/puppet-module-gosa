@@ -1,0 +1,433 @@
+<?xml version="1.0"?>
+<conf configVersion="0e16844ac91297ffc1dee2f0f65ef2af" >
+
+  <!-- GOsa menu definition **************************************************
+
+       This tag defines the side and icon menu inside the
+       interface. Defining an entry here is no guarantie to get it shown,
+       though. Only entries with matching ACL's get shown.
+
+       There are two types of entries inside of the menu: section and plugin
+
+       Defining a section:
+
+       Open a <section> tag including a "name" attribute. This will show up in
+       the menu as a new section later on. Own entries are not handled via I18N
+       by default. Close the </section> tag after your plugin definitions.
+
+       Defining a plugin:
+
+       Open a <plugin> tag including a "class" attribute. The "class" should be
+       present inside your GOsa setup - the entry will be ignored if it is not.
+
+       Plugins should have an "acl" entry, that allows GOsa to decide wether
+       a user is allowed to see a plugin or not. The "acl" string matches with
+       an ACL definition done inside of GOsa -> ACLs.
+
+       You can override an icon by specifying the "icon" attribute.
+
+       For more information about possible configuration parameters, please take
+       a look at the gosa.conf(5) manual page.
+   -->
+  <menu>
+
+    <!-- Section to enable quick self service shortcuts for the logged in user -->
+    <section name="My account">
+      <plugin acl="users/user:self" class="user" />
+      <plugin acl="users/posixAccount:self"  class="posixAccount" />
+      <plugin acl="users/environment:self" class="environment"  />
+      <plugin acl="users/mailAccount:self" class="mailAccount" />
+      <plugin acl="users/sambaAccount:self" class="sambaAccount" />
+      <plugin acl="users/netatalk:self" class="netatalk" />
+      <plugin acl="users/connectivity:self" class="connectivity" />
+      <plugin acl="users/gofaxAccount:self" class="gofaxAccount" />
+      <plugin acl="users/phoneAccount:self" class="phoneAccount" />
+      <plugin acl="users/nagiosAccount:self" class="nagiosAccount" />
+      <plugin acl="users/scalixAccount:self" class="scalixAccount" />
+      <plugin acl="users/password:self" class="password" />
+    </section>
+
+    <!-- Section to enable administrative services -->
+    <section name="Administration">
+      <plugin acl="department" class="departmentManagement" />
+      <plugin acl="users" class="userManagement" />
+      <plugin acl="groups" class="groupManagement" />
+      <plugin acl="roles" class="roleManagement"/>
+      <plugin acl="ogroups" class="ogroupManagement" />
+      <plugin acl="application" class="applicationManagement" />
+      <plugin acl="mimetypes" class="mimetypeManagement" />
+      <plugin acl="devices" class="deviceManagement" />
+      <plugin acl="terminal/termgeneric,workstation/workgeneric,server/servgeneric,phone/phoneGeneric,printer/printgeneric,component/componentGeneric,winworkstation/wingeneric,opsi/opsiGeneric" class="systemManagement" />
+      <!-- Use 'lockDn'      for dn
+               'lockName'    for name
+               'lockType'    for branch/freeze -->
+      <plugin acl="fai/faiScript,fai/faiHook,fai/faiTemplate,fai/faiVariable,fai/faiPartitionTable,fai/faiPackage,fai/faiProfile,fai/faiManagement,opsi/opsiProperties" class="faiManagement" />
+      <plugin acl="opsi" class="opsiLicenses"/>
+      <plugin acl="gofaxlist" class="blocklist" />
+      <plugin acl="gofonmacro" class="goFonMacro" />
+      <plugin acl="gofonconference" class="phoneConferenceManagment" />
+      <plugin acl="acl"  class="aclManagement" />
+      <plugin acl="sudo" class="sudoManagement" />
+    </section>
+
+    <!-- Section to enable addon plugins -->
+    <section name="Addons">
+      <plugin acl="server/rSyslogServer"  class="rsyslog" />
+    <!--  <plugin acl="server/servservrepository,server/dakrepository,server/dakkeyring,server/dakqueue" class="dak_tabs" path="plugins/addons/dak" /> -->
+      <plugin acl="addressbook" class="addressbook" />
+      <plugin acl="mailqueue" class="mailqueue" />
+      <plugin acl="faxreport/faxreport:self,faxreport" class="faxreport" />
+      <plugin acl="fonreport/fonreport:self,fonreport" class="fonreport" />
+      <plugin acl="gotomasses" class="gotomasses" />
+      <plugin acl="ldapmanager" class="ldif" />
+    </section>
+  </menu>
+
+
+
+  <!-- Tab definitions *******************************************************
+
+       Tab definitions define the sub plugins which get included for certain
+       tabbed dialogs. If you change something here, never (!) remove the
+       primary (the first) "tab" tag which is defined. Most tabbed dialogs
+       need a primary plugin.
+
+       "*tab" should be looked for by a defined plugin. This one will take
+       every "tab" defined "class" and will show it inside of a tabbed dialog
+       with the header defined in "name".
+   -->
+
+  <!-- ACL dialog -->
+  <acltab>
+    <tab class="acl" name="ACL" />
+  </acltab>
+
+  <aclroletab>
+    <tab class="aclRole" name="ACL Role" />
+  </aclroletab>
+
+  <!-- User dialog -->
+  <usertabs>
+     <tab class="user" name="Generic" />
+     <tab class="posixAccount" name="Unix" />
+     <tab class="environment" name="Environment" />
+     <tab class="mailAccount" name="Mail" />
+     <tab class="sambaAccount" name="Samba" />
+     <tab class="netatalk" name="Netatalk" />
+     <tab class="connectivity" name="Connectivity" />
+     <tab class="gofaxAccount" name="Fax" />
+     <tab class="phoneAccount" name="Phone" />
+     <tab class="scalixAccount" name="Scalix" />
+     <tab class="nagiosAccount" name="Nagios" />
+   </usertabs>
+
+  <opsiLicenseTabs>
+    <tab class="licensePoolGeneric" name="Generic"/>
+    <tab class="licenseUsage" name="Usage"/>
+  </opsiLicenseTabs>
+
+  <!-- Group dialog -->
+  <grouptabs>
+    <tab class="group" name="Generic" />
+    <tab class="environment" name="Environment" />
+    <tab class="appgroup" name="Applications" />
+    <tab class="mailgroup" name="Mail" />
+  </grouptabs>
+
+  <!-- Sudo dialog -->
+  <sudotabs>
+    <tab class="sudo" name="Generic" />
+    <tab class="sudoOption" name="Options" />
+  </sudotabs>
+
+  <!-- GOfax plugins -->
+  <faxblocktabs>
+    <tab class="blocklistGeneric" name="Generic" />
+  </faxblocktabs>
+
+  <!-- GOfon plugins -->
+  <conferencetabs>
+    <tab class="conference" name="Generic" />
+  </conferencetabs>
+
+  <macrotabs>
+    <tab class="macro" name="Generic" />
+    <tab class="macroParameter" name="Parameter" />
+  </macrotabs>
+
+  <phonetabs>
+    <tab class="phoneGeneric" name="Generic" />
+    <!-- <tab class="glpiAccount" name="Inventory" /> -->
+  </phonetabs>
+
+  <!-- GOto plugins -->
+  <appstabs>
+    <tab class="application" name="Generic" />
+    <tab class="applicationParameters" name="Options" />
+  </appstabs>
+
+  <mimetabs>
+    <tab class="mimetype" name="Generic" />
+  </mimetabs>
+
+  <devicetabs>
+    <tab class="deviceGeneric" name="Generic" />
+  </devicetabs>
+
+  <arpnewdevicetabs>
+    <tab class="ArpNewDevice" name="Generic" />
+  </arpnewdevicetabs>
+
+  <termtabs>
+     <tab class="termgeneric" name="Generic" />
+     <tab class="termstartup" name="Startup" />
+     <tab class="termservice" name="Devices" />
+     <tab class="terminfo" name="Information" snmpCommunity="goto" />
+     <!--<tab class="glpiAccount" name="Inventory" /> -->
+  </termtabs>
+
+  <servtabs>
+     <tab class="servgeneric" name="Generic" />
+     <tab class="workstartup" name="Startup" />
+     <tab class="ServerService" name="Services" />
+     <tab class="faiSummaryTab" name="Deployment summary" />
+     <tab class="gotoLogView" name="Installation logs" />
+     <tab class="terminfo" name="Information" snmpCommunity="goto" />
+     <!-- <tab class="glpiAccount" name="Inventory" /> -->
+  </servtabs>
+
+  <worktabs>
+     <tab class="workgeneric" name="Generic" />
+     <tab class="workstartup" name="Startup" />
+     <tab class="workservice" name="Devices" />
+     <tab class="printgeneric" name="Printer" />
+     <tab class="terminfo" name="Information" snmpCommunity="goto" />
+     <tab class="faiSummaryTab" name="Deployment summary" />
+     <tab class="gotoLogView" name="Installation logs" />
+     <!-- <tab class="glpiAccount" name="Inventory" /> -->
+  </worktabs>
+
+  <printtabs>
+     <tab class="printgeneric" name="Generic" />
+     <!-- <tab class="glpiPrinterAccount" name="Inventory" /> -->
+  </printtabs>
+
+  <componenttabs>
+     <tab class="componentGeneric" name="Generic" />
+     <!-- <tab class="glpiAccount" name="Inventory" /> -->
+  </componenttabs>
+
+  <wintabs>
+     <tab class="wingeneric" name="Generic" />
+     <!-- <tab class="glpiAccount" name="Inventory" /> -->
+  </wintabs>
+
+  <serverservice>
+    <tab class="goMailServer" />
+    <!-- <tab class="servkolab" /> -->
+    <tab class="goNtpServer" />
+    <tab class="servrepository" />
+    <tab class="goImapServer" />
+    <tab class="goKrbServer" />
+    <tab class="goFaxServer" />
+    <tab class="goFonServer" />
+    <tab class="goGlpiServer" />
+    <tab class="goCupsServer" />
+    <tab class="goKioskService" />
+    <tab class="goTerminalServer" />
+    <tab class="goLdapServer" />
+    <tab class="goShareServer" />
+    <tab class="gospamserver" />
+    <tab class="govirusserver" />
+    <tab class="servdhcp" />
+    <tab class="servdns" />
+    <tab class="rSyslogServer" />
+  </serverservice>
+
+  <!-- Department plugin -->
+  <deptabs>
+    <tab class="department" name="Generic" />
+  </deptabs>
+
+  <organization_tabs>
+    <tab class="organization" name="Generic" />
+  </organization_tabs>
+
+  <locality_tabs>
+    <tab class="locality" name="Generic" />
+  </locality_tabs>
+
+  <country_tabs>
+    <tab class="country" name="Generic" />
+  </country_tabs>
+
+  <dcobject_tabs>
+    <tab class="dcObject" name="Generic" />
+  </dcobject_tabs>
+
+  <domain_tabs>
+    <tab class="domain" name="Generic" />
+  </domain_tabs>
+
+  <!-- Role tabs -->
+  <roletabs>
+    <tab class="roleGeneric" name="Generic"/>
+  </roletabs>
+
+  <ogrouptabs>
+    <tab class="ogroup" name="Generic" />
+  </ogrouptabs>
+
+  <!-- Debian archive management plugin -->
+  <!--
+  <dak_tabs>
+    <tab class="dakrepository" name="Repository" />
+    <tab class="dakqueue" name="Queue" />
+    <tab class="dakkeyring" name="Key ring" />
+  </dak_tabs>
+  -->
+
+  <!-- Connectivity plugins -->
+  <connectivity>
+<!-- <tab class='kolabAccount' /> -->
+    <tab class="proxyAccount" />
+    <tab class="pureftpdAccount" />
+    <tab class="webdavAccount" />
+    <tab class="phpgwAccount" />
+    <tab class="intranetAccount" />
+    <!--
+    <tab class="opengwAccount"
+      username="OGo"
+      password=""
+      database="OGo"
+      databaseServer="localhost" />
+    -->
+    <tab class="pptpAccount" />
+    <tab class="phpscheduleitAccount" />
+    <tab class="oxchangeAccount" />
+  </connectivity>
+
+  <ldiftab>
+    <tab class="ldifexport" name="Export" />
+    <tab class="xlsexport" name="Excel Export" />
+    <tab class="ldifimport" name="Import" />
+    <tab class="csvimport" name="CSV Import" />
+  </ldiftab>
+
+  <faipartitiontabs>
+    <tab class="faiPartitionTable" name="Partitions" />
+  </faipartitiontabs>
+
+  <faiscripttabs>
+    <tab class="faiScript" name="Script" />
+  </faiscripttabs>
+
+  <faihooktabs>
+    <tab class="faiHook" name="Hooks" />
+  </faihooktabs>
+
+  <faivariabletabs>
+    <tab class="faiVariable" name="Variables" />
+  </faivariabletabs>
+
+  <faitemplatetabs>
+    <tab class="faiTemplate" name="Templates" />
+  </faitemplatetabs>
+
+  <faiprofiletabs>
+    <tab class="faiProfile" name="Profiles" />
+    <tab class="faiSummaryTab" name="Summary" />
+  </faiprofiletabs>
+
+  <faipackagetabs>
+    <tab class="faiPackage" name="Packages" />
+  </faipackagetabs>
+
+  <opsitabs>
+    <tab class="opsiGeneric" name="Opsi" />
+    <tab class="opsiSoftware" name="Hardware information" />
+    <tab class="opsiHardware" name="software information" />
+    <tab class="licenseUsageByHost" name="Usage"/>
+  </opsitabs>
+
+  <opsiprodconfig>
+    <tab class="opsiProperties" name="Config" />
+    <tab class="licenseByProduct" name="Usage"/>
+  </opsiprodconfig>
+
+  <!-- rSyslog plugin -->
+  <rsyslogtabs>
+      <tab class="rsyslog" name="System logs" />
+  </rsyslogtabs>
+
+  <!-- Main section **********************************************************
+
+       The main section defines global settings, which might be overridden by
+       each location definition inside.
+
+       For more information about the configuration parameters, take a look at
+       the gosa.conf(5) manual page.
+
+  -->
+  <main default="default"
+        logging="true"
+        listSummary="true"
+        displayErrors="false"
+        schemaCheck="true"
+        copyPaste="false"
+        forceGlobals="true"
+        forceSSL="false"
+        ldapStats="false"
+        warnSSL="true"
+        storeFilterSettings="true"
+        sendCompressedOutput="true"
+        modificationDetectionAttribute="entryCSN"
+        language="fr_FR"
+        theme="default"
+        sessionLifetime="7200"
+        templateCompileDirectory="/var/spool/gosa"
+        debugLevel="0"
+        sambaHashHook='perl -MCrypt::SmbHash -e &quot;print join(q[:], ntlmgen \$ARGV[0]), $/;&quot;'
+    >
+
+    <!-- Location definition -->
+    <location name="default"
+              passwordDefaultHash="clear"
+              accountPrimaryAttribute="uid"
+              userRDN="ou=people"
+              groupRDN="ou=groups"
+              gidNumberBase="10000"
+              uidNumberBase="10000"
+              disabled_gosaSupportURI="gosa-si-secret@server:20081"
+              disabled_gosaSupportTimeout="15"
+              loginAttribute="uid"
+              timezone="Europe/Berlin"
+              honourUnitTags="false"
+              useSaslForKerberos="false"
+              rfc2307bis="false"
+              personalTitleInDN="false"
+              strictNamingRules="false"
+              gosaSharedPrefix=""
+              imapTimeout="10"
+              honourIvbbAttributes="false"
+			  sambaSID="S-1-5-21-2775570649-3369970427-3663952704"
+              sambaRidBase="1"
+              enableSnapshots="false"
+              snapshotBase="dc=snapshot,dc=root"
+              snapshotAdminDn="<%= ldap_bind_dn %>"
+              snapshotAdminPassword="<%= ldap_bind_pw %>"
+			  snapshotURI="ldap://localhost:389"
+			  mailMethod="Cyrus"
+			  mailAttribute="mail"
+			  mailUserCreation="%prefix%%mail%"
+			  cyrusUseSlashes="true"
+			  cyrusDeleteMailbox="true"
+			  cyrusAutocreateFolders="Sent,Trash,Drafts,Junk"
+              config="ou=gosa,ou=configs,ou=systems,dc=root">
+              <referral URI="ldap://localhost:389/dc=root"
+                        adminDn="<%= ldap_bind_dn %>"
+                        adminPassword="<%= ldap_bind_pw %>"
+              />
+    </location>
+  </main>
+</conf>
