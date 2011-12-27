@@ -1,11 +1,13 @@
 class gosa (
-  $ldap_bind_dn   = hiera('ldap_bind_dn', false),
-  $ldap_bind_pw   = hiera('ldap_bind_pw', false)
-  ) {
+  $ldap_bind_dn,
+  $ldap_bind_pw,
+) {
   
   include apache2::variables
   
-  package { [ 'gosa', 'gosa-help-en', 'gosa-help-fr', 'gosa-plugin-dhcp', 'gosa-plugin-dns', 'gosa-plugin-log', 'gosa-plugin-mail', 'gosa-plugin-pureftpd', 'gosa-plugin-rsyslog', 'gosa-plugin-samba' ]: ensure  => present }
+  package { [ 'gosa', 'gosa-help-en', 'gosa-help-fr', 'gosa-plugin-dhcp', 'gosa-plugin-dns', 'gosa-plugin-log', 'gosa-plugin-mail', 'gosa-plugin-pureftpd', 'gosa-plugin-rsyslog', 'gosa-plugin-samba' ]:
+    ensure  => present
+  }
 
   file { '/etc/gosa/gosa.conf':
     ensure  => file,
@@ -37,3 +39,4 @@ class gosa (
     require => Package['gosa']
   }
 }
+
