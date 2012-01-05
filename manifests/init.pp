@@ -34,7 +34,7 @@ class gosa (
     notify  => Exec['reload-apache2']
   }
 
-  if patch_for_cyrus_multidomain { 
+  if $patch_for_cyrus_multidomain { 
     file { '/usr/share/gosa/plugins/personal/mail/class_mail-methods-cyrus.inc':
       ensure  => file,
       source  => 'puppet:///modules/gosa/class_mail-methods-cyrus.inc',
